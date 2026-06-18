@@ -123,8 +123,10 @@
   (lime bg, void text), `void` (void bg, dust text), `ghost` (outline).
 
 ### `Chip`, `TapeLabel`, `Avatar`
-- `TapeLabel`: the torn-tape look, `label` text, `color` = `lime | ember`. The signature
-  hand gesture. Rotated slightly when placed.
+- `TapeLabel`: the torn-tape look, rotated slightly when placed. **The real assets are
+  pre-rendered PNGs** (see §6) — hand-lettered text is outlined, so the 6 status tapes
+  (`label_new.png` etc.) are finished image fills, NOT a live text+colour swap. For
+  *new* labels later, composite text over the blank `label_tape.png` base.
 
 ---
 
@@ -166,3 +168,75 @@ Once the clean file exists:
 for all tokens (named like the code tokens), auto-layout (not absolute positioning),
 component properties for swappable content. Build the file this way and the conversion is
 near-mechanical instead of a guessing game.
+
+---
+
+## 6. 🗃 Brand asset manifest (prepared 2026-06-18 — the real, cleaned files)
+
+Alwyn's hand-drawn assets, exported from Kittl, cleaned + organised in
+`~/dev/wrdo-assets/`. **30 production assets, 0 raster-stuffed SVGs.** Originals
+preserved in `_raw/` (svg) and `_raw_png/` (png); cleaning config is
+`~/dev/wrdo-assets/svgo.config.cjs`.
+
+### The format rule (the load-bearing convention)
+> **Flat / single-colour / geometric → SVG. Textured / illustrated / multi-colour → PNG.**
+
+SVG only wins when the art is simple enough that vector paths are *smaller* than a
+PNG. The moment there's a painted/brush texture, halftone, distressed-stamp edge,
+or photo-like fill, **PNG wins on both size AND fidelity** — Kittl bakes those
+textures as embedded rasters inside the SVG wrapper, so the "SVG" is just a heavy
+PNG-in-a-box. The tell: a small graphic with a fat SVG size = baked texture →
+make it PNG. This is why the hand-lettered tape labels + illustrated badges are
+PNG while the spiral, wordmark, and nav-word labels stay SVG.
+
+Cleaning: SVGs run through `svgo` (keeps viewBox, does **not** merge/collapse
+paths — that would damage the hand-drawn gesture). PNGs run through `oxipng`
+(lossless, `-o max --strip safe`), exported transparent.
+
+### `logo/` — 8 SVG (all clean vector)
+| File | Use |
+|---|---|
+| `logo_wrdo_full.svg` (95K) | full WRDO mark, spiral on Dust/cream — hero |
+| `logo_wrdo_tape.svg` (80K) | spiral + WRDO™ on the lime textured tape (the slogan lockup). **Replaced** the old 578K raster `logo_tape_full.svg` (deleted). |
+| `logo_wrdo_compact_{neon,dark}.svg` (6K) | spiral + WRDO only, two modes |
+| `logo_wrdo_no_slogan_{neon,dark}.svg` (5K) | wordmark sans tape, two modes |
+| `logo_spiral_{neon,dark}.svg` (3K) | the bare spiral mark, two modes |
+
+### `labels/` — flat tape/text labels (SVG for nav words, PNG for textured tapes)
+| File | Kind | Format |
+|---|---|---|
+| `label_new.png`, `label_sale.png`, `label_pre_order.png`, `label_sold_out.png`, `label_last_one.png`, `label_back_in_stock.png` (5–10K) | **status tapes** — hand-lettered on textured tape | PNG (were 30–95K as SVG; ~6× smaller as PNG) |
+| `label_tape.png` (39K) | blank textured zebra-tape **base** (transparent) | PNG |
+| `label_verified.png` (40K) | distressed "VERIFIED" rubber-stamp oval | PNG |
+| `label_book/pay/shop/stash/work.svg` (5–11K) | **nav-word** labels — flat | SVG |
+| `label_wrdo_love.svg` (18K) | lime thumbs-up sticker — flat enough | SVG |
+
+> Status-label colour coding: New / Pre-Order / Back-in-Stock = lime; Sale = dust+ember;
+> Last One = ember; Sold Out = void+lime. All share ~the same height (line up on cards).
+> Text is outlined (hand-lettering can't be a live font) — so these are *finished*
+> labels, not recolourable; the blank `label_tape.png` is the base for *new* ones.
+
+### `badges/` — 7 PNG (illustrated kind/fulfilment badges)
+| File | What |
+|---|---|
+| `label_sundowner.png` (45K) | circular sunset-scene badge (the Sundowner kind) |
+| `label_relic.png` (67K) | the Relic (second-hand) kind badge |
+| `label_rental.png` (46K) | lime smiley-sun starburst on orange tile (Rental kind) |
+| `label_local.png` (71K) | Local kind badge |
+| `label_free_delivery.png` (66K), `label_collect.png` (32K), `label_drop.png` (28K) | fulfilment chips |
+
+### `icons/` — 1 SVG
+| File | Use |
+|---|---|
+| `icon_apple_touch.svg` (64K) | spiral-on-lime app icon. Rasterise to a 180×180 `apple-touch-icon.png` at storefront build time (apple-touch is meant to be a PNG). |
+
+### Folder map → component usage
+- `ProductCard.TapeLabel` instance ← the `label_*.png` status tapes (image fill, not inline SVG).
+- `ProductCard` `kind` variants ← the `badges/*.png`.
+- `Logo` component ← `logo_wrdo_*` (full / tape / compact / no-slogan variants).
+- `NavTile` / brand chrome ← nav-word `label_*.svg` + spiral.
+
+**Note for the code handoff:** `label_tape` and `label_verified` are PNG (not SVG)
+— in Figma/code they're **image fills**, not inline vectors. The 6 status tapes
+and all badges are likewise image fills. Everything in `logo/`, the nav-word
+labels, and `icon_apple_touch` are true inline SVG.
