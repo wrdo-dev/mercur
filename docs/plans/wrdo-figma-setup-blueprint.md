@@ -171,6 +171,35 @@ near-mechanical instead of a guessing game.
 
 ---
 
+## 5b. 🔣 Icon layer — IconPark outline (LOCKED 2026-06-18)
+
+The **functional icon layer** is **IconPark** (ByteDance, Apache-2.0 — fully
+shippable). Imported into Figma file `KDf708Snj4DDfDoBTZYp6a` (WRDO-Frontend),
+"icon pack" page — ~2,900 icons, 38 categories, 24×24 grid.
+
+**The decision (Alwyn's, and it's correct):** *icons stay plain.* The brand
+flavour comes from the stickers, tape labels, scribbles, and the spiral — NOT
+from the icons. Clean icons are the **quiet** that lets the stickers shout; if
+the icons were also quirky, everything reads as AI-busy and the special moments
+stop landing. Same discipline as one-accent colour: restraint everywhere except
+the deliberate brand gestures.
+
+**Why IconPark fits (verified from SVG source):**
+- `stroke-width="2"` uniform · `stroke-linecap/linejoin="round"` (warm-but-clean, not cold/cutesy)
+- `fill="none"` outline style · `viewBox="0 0 24 24"`
+- **`stroke="var(--stroke-0, …)"`** — built to inherit a colour token. Recolours to
+  any brand token (void default → lime on active) with one variable. Maps straight
+  to the storefront's 2-tier token system.
+
+**Rules:** (1) **outline theme ONLY** — IconPark also ships filled/two-tone/duotone;
+never import or mix them. (2) Icons render as single SVG components coloured via
+token (`stroke: var(--brand-void)` → `var(--brand-lime)` active); sticker/tape PNGs
+sit ON TOP as the flavour. Two layers, two jobs. (3) The rounded joins harmonise
+with the soft squircle cards (`radius/card 42px`) + `shadow/lift` — a sharp icon
+set would have fought them.
+
+---
+
 ## 6. 🗃 Brand asset manifest (prepared 2026-06-18 — the real, cleaned files)
 
 Alwyn's hand-drawn assets, exported from Kittl, cleaned + organised in
