@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WRDO — Living Style Guide v2</title>
+<style>
+:root {
+  --void:#1C110D; --void-2:#230B06; --lime:#CCFF00; --lime-press:#A8D400;
+  --orange:#E46227; --dust:#F5F2ED; --slate:#678590;
+  --n-0:#FFFFFF; --n-25:#FAF8F5; --n-50:#F0EDE8; --n-100:#E3DED7;
+  --n-200:#C9C3BA; --n-300:#A39C92; --n-400:#7A736A; --n-500:#564F47; --n-700:#272019;
+  --success:#17A34A; --error:#D92D20; --warning:#F0A413; --info:#3B82F6;
+  --bg:var(--dust); --surface:var(--n-0); --surface-2:var(--n-25);
+  --border:var(--n-100); --text:var(--void); --text-2:#6B6760; --text-3:var(--n-400);
+  --fd:'Satoshi','Inter',system-ui,sans-serif; --fb:'Inter',system-ui,sans-serif;
+  --r:16px; --r-sm:10px; --r-lg:24px;
+}
+[data-theme="dark"]{
+  --bg:var(--void); --surface:var(--void-2); --surface-2:#2A1813;
+  --border:#3A2620; --text:var(--dust); --text-2:#9A958E; --text-3:#6E665E;
+  --success:#B3DD00; --error:#FA2129; --warning:#FF8A00;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);-webkit-font-smoothing:antialiased;transition:.25s;padding:36px 20px 120px}
+.wrap{max-width:980px;margin:0 auto}
+h1{font-family:var(--fd);font-weight:800;font-size:clamp(38px,7vw,68px);letter-spacing:-.03em;line-height:1}
+h2{font-family:var(--fb);font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--text-3);margin:52px 0 8px;font-weight:600}
+.note{color:var(--text-2);font-size:14px;margin-bottom:18px;max-width:620px}
+.sub{color:var(--text-2);font-size:18px;margin-top:12px;max-width:580px}
+
+/* the spiral logo (CSS approximation of the koru mark) */
+.spiral{width:38px;height:38px;border-radius:50%;border:6px solid var(--text);position:relative;flex:0 0 auto}
+.spiral::after{content:"";position:absolute;inset:7px;border-radius:50%;border:5px solid var(--text);border-bottom-color:transparent;border-right-color:transparent;transform:rotate(45deg)}
+/* lime tape — the signature */
+.tape{display:inline-block;background:var(--lime);color:var(--void);font-family:var(--fd);font-weight:800;padding:5px 14px;transform:rotate(-1.5deg);box-shadow:2px 3px 0 rgba(0,0,0,.12)}
+.tape.hand{font-family:'Bradley Hand','Comic Sans MS',cursive;font-weight:700;font-size:15px;letter-spacing:.02em}
+
+.row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:22px}
+
+/* glass ELEMENT (not full glass) */
+.glass{background:rgba(255,255,255,.55);backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,.5);border-radius:var(--r);padding:16px}
+[data-theme="dark"] .glass{background:rgba(40,24,19,.5);border-color:rgba(255,255,255,.08)}
+
+.sw{border-radius:var(--r-sm);padding:12px;height:88px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--border);font-size:12px}
+.sw b{font-size:12.5px}
+
+.btn{font-family:var(--fd);font-weight:700;font-size:15px;border:none;border-radius:999px;padding:13px 24px;cursor:pointer;transition:transform .12s,background .15s,box-shadow .15s}
+.btn:active{transform:scale(.96)}
+.btn-primary{background:var(--lime);color:var(--void);box-shadow:0 0 0 0 rgba(204,255,0,.5)}
+.btn-primary:hover{background:var(--lime-press);box-shadow:0 6px 22px -8px rgba(204,255,0,.6)}
+.btn-void{background:var(--void);color:var(--dust)}
+[data-theme="dark"] .btn-void{background:var(--dust);color:var(--void)}
+.btn-ghost{background:transparent;color:var(--text);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--text)}
+
+.chip{background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:9px 15px;font-size:14px;font-weight:500;cursor:pointer;transition:.12s}
+.chip:hover{border-color:var(--text-3)}
+.chip.on{background:var(--lime);color:var(--void);border-color:var(--lime)}
+
+.wmsg{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);border-top-left-radius:4px;padding:15px 17px;max-width:480px;font-size:16px;line-height:1.5}
+.wmsg .who{display:flex;align-items:center;gap:7px;font-family:var(--fd);font-size:12px;color:#7a9900;font-weight:800;margin-bottom:7px}
+[data-theme="dark"] .wmsg .who{color:var(--lime)}
+.wmsg .who .s{width:15px;height:15px;border:2.5px solid currentColor;border-radius:50%;position:relative}
+.wmsg .who .s::after{content:"";position:absolute;inset:2px;border-radius:50%;border:2px solid currentColor;border-right-color:transparent;border-bottom-color:transparent}
+
+.listing{padding:0;overflow:hidden}
+.listing .ph{height:140px;background:var(--surface-2);display:flex;align-items:center;justify-content:center;color:var(--text-3);font-size:13px}
+.listing .body{padding:15px}
+.price{font-family:var(--fd);font-weight:800;font-size:21px}
+.meta{color:var(--text-2);font-size:14px;margin-top:3px}
+.tag{display:inline-block;background:var(--surface-2);border:1px solid var(--border);border-radius:7px;padding:3px 9px;font-size:12px;color:var(--text-2)}
+
+/* ECHO ZONE — trust/serious pages: calm, stripe motif, no WRDO loudness */
+.echo-zone{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:0;overflow:hidden;position:relative}
+.echo-stripes{height:8px;background:repeating-linear-gradient(115deg,var(--void) 0 9px,transparent 9px 20px);opacity:.85}
+[data-theme="dark"] .echo-stripes{background:repeating-linear-gradient(115deg,var(--dust) 0 9px,transparent 9px 20px)}
+.echo-body{padding:20px 22px}
+.echo-body .lbl{display:flex;align-items:center;gap:8px;font-family:var(--fd);font-size:12px;font-weight:700;color:var(--slate);letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.echo-body h3{font-family:var(--fd);font-weight:700;font-size:21px;letter-spacing:-.01em;margin-bottom:8px}
+.echo-body p{color:var(--text-2);font-size:15px;line-height:1.55}
+
+/* primitive x modern icon mix */
+.ico{width:46px;height:46px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px}
+.ico.prim{background:var(--void);color:var(--lime)}
+[data-theme="dark"] .ico.prim{background:var(--void-2)}
+
+.toggle{position:fixed;top:18px;right:18px;z-index:9}
+</style>
+</head>
+<body>
+<button class="btn btn-ghost toggle" onclick="document.documentElement.dataset.theme=document.documentElement.dataset.theme==='light'?'dark':'light'">↺ light / dark</button>
+
+<div class="wrap">
+  <div class="row" style="gap:16px"><div class="spiral"></div><h1>WRDO</h1></div>
+  <p class="sub">Two worlds, clashing and making sense. Premium 2026, refined not chaotic — small details make it iconic.</p>
+  <div class="row" style="margin-top:20px">
+    <span class="tape">⊚ WRDO</span>
+    <span class="tape hand">as you are</span>
+  </div>
+  <p class="note" style="margin-top:10px">The lime tape + handwritten "as you are" — the signature. (Browser may sub the handwriting font; the real one is a hand script.)</p>
+
+  <h2>Palette — warm, never visible brown</h2>
+  <div class="grid g4">
+    <div class="sw" style="background:#1C110D;color:#F5F2ED"><b>Void</b><small>near-black</small></div>
+    <div class="sw" style="background:#CCFF00;color:#1C110D"><b>Lime</b><small>the spark · CTA</small></div>
+    <div class="sw" style="background:#E46227;color:#fff"><b>Orange</b><small>warm 2nd</small></div>
+    <div class="sw" style="background:#F5F2ED;color:#1C110D"><b>Dust</b><small>warm cream</small></div>
+    <div class="sw" style="background:#678590;color:#fff"><b>Slate</b><small>echo's calm</small></div>
+  </div>
+
+  <h2>Two-world icons — primitive ⨯ modern</h2>
+  <p class="note">Cave-primitive (etched, spiral, lime-on-void) for character moments; clean modern for functional. The mix is the brand.</p>
+  <div class="row">
+    <div class="ico prim">⊚</div><div class="ico prim">🔥</div><div class="ico prim">✋</div>
+    <span style="color:var(--text-3);font-size:13px;margin:0 6px">+</span>
+    <div class="ico">🛒</div><div class="ico">📍</div><div class="ico">💳</div>
+  </div>
+
+  <h2>WRDO zone — warm, excited, the voice</h2>
+  <div class="grid g2">
+    <div class="wmsg"><div class="who"><span class="s"></span>WRDO</div>Morning Alwyn — your usual coffee at the deli's one tap away. Cold front this weekend, and there's a drop at the gate at 2. Want anything?</div>
+    <div class="wmsg"><div class="who"><span class="s"></span>WRDO</div>It's 35° out — nobody wants to walk 10km. A ride elsewhere runs ~R120; I'm asking R90. Grab it?</div>
+  </div>
+
+  <h2>echo zone — trust pages held by echo (calm, stripes, no loudness)</h2>
+  <p class="note">T&Cs, Privacy, POPIA, Payments. echo (lowercase) handles the serious stuff — her stripe motif + slate calm replace WRDO's voice. Trust is <em>felt</em>, not shouted.</p>
+  <div class="grid g2">
+    <div class="echo-zone">
+      <div class="echo-stripes"></div>
+      <div class="echo-body">
+        <div class="lbl">🦓 echo · your privacy</div>
+        <h3>What we keep, and what we never do</h3>
+        <p>Your phone number is how I know it's you — I never sell it, never hand it out. You can ask me to forget you anytime. Plain words, no fine print traps.</p>
+      </div>
+    </div>
+    <div class="echo-zone">
+      <div class="echo-stripes"></div>
+      <div class="echo-body">
+        <div class="lbl">🦓 echo · payment</div>
+        <h3>R90 to Paarl Taxis</h3>
+        <p>Paid straight to the driver's company. I take a small cut to keep the lights on — Echo's grooming bills, you know. Held safe until your ride's done.</p>
+        <button class="btn btn-void" style="margin-top:14px;width:100%">Confirm & pay</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>Buttons — Lime is the action (with motion)</h2>
+  <div class="row">
+    <button class="btn btn-primary">⚡ Book now</button>
+    <button class="btn btn-void">Pay</button>
+    <button class="btn btn-ghost">Not now</button>
+  </div>
+  <p class="note" style="margin-top:8px">Press them — subtle scale + lime glow on hover. Detail is where the brand lives.</p>
+
+  <h2>Chips — tap-mostly, not type</h2>
+  <div class="row">
+    <span class="chip on">🏠 Home</span><span class="chip">💼 Work</span>
+    <span class="chip">📍 Paarl Mall</span><span class="chip">🗺️ Pin on map</span>
+  </div>
+
+  <h2>Glass element — premium depth, not full glass</h2>
+  <div style="background:linear-gradient(120deg,#1C110D,#3A2620);border-radius:var(--r);padding:22px">
+    <div class="glass" style="--surface:rgba(255,255,255,.55)">
+      <div style="display:flex;align-items:center;gap:10px;color:var(--void)"><span style="font-size:18px">🔍</span><span style="font-weight:600">What do you need?</span></div>
+    </div>
+    <p style="color:#9A958E;font-size:13px;margin-top:10px">A glass <em>moment</em> (the ask-bar) floating over depth — not the whole UI in blur.</p>
+  </div>
+
+  <h2>Listing cards — one adaptive template</h2>
+  <div class="grid g2">
+    <div class="card listing">
+      <div class="ph">[ Relic · its story ]</div>
+      <div class="body"><span class="tag">Relic · 1 of its kind</span>
+        <div class="price" style="margin-top:8px">R 3 400</div>
+        <div class="meta">Leather couch · survived three moves & a toddler</div>
+        <button class="btn btn-primary" style="margin-top:13px;width:100%">View its story</button>
+      </div>
+    </div>
+    <div class="card listing">
+      <div class="ph">[ Sundowner ]</div>
+      <div class="body"><span class="tag" style="border-color:var(--orange);color:var(--orange)">☀ Sundowner · 2h 14m</span>
+        <div class="price" style="margin-top:8px">R 89 <span style="font-size:14px;color:var(--text-3);text-decoration:line-through;font-weight:400">R129</span></div>
+        <div class="meta">Wood-fired pizza · The Deli · dies at sunset</div>
+        <button class="btn btn-void" style="margin-top:13px;width:100%">Grab it</button>
+      </div>
+    </div>
+  </div>
+
+  <h2>The Flame — appreciation, not a scoreboard</h2>
+  <div class="card row" style="justify-content:space-between">
+    <div><b style="font-family:var(--fd)">Lerato's review</b><div class="meta">"Best haircut in Paarl, hands down."</div></div>
+    <div class="row"><span style="font-size:22px;color:var(--orange)">🔥</span><span style="font-size:13px;color:var(--text-2)">someone appreciated this</span></div>
+  </div>
+</div>
+</body>
+</html>

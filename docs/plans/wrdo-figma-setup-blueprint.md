@@ -92,18 +92,46 @@
 - `default`: `bg = tile/grey-1|2|3` (pass grey as a variant or property), `void` text.
 - Label centered at bottom, `Title/Nav` (25px semibold).
 
-### `ProductCard`
+### `ProductCard` (LOCKED 2026-06-18 — restraint rules from the A/B/C test)
 - 358×540px, `radius/card` (42px), white bg, `shadow/lift`.
-- Properties: `kind` = `product | relic | sundowner`, `compact` boolean.
+- Properties: `kind` = `product | relic | sundowner | rental | local`, `variant` =
+  `preview | opener`.
 - Inner image panel: `radius/image` (32px), inset ~10px.
-- `TapeLabel` instance top-left, rotated ~-8.7° ("New" / "Pre-order" / "Relic").
-- Title: `Title/Card` (24px semibold) in the **accent color** (lime/alt for product+relic,
-  ember for ember-deals — the title picks up the deal's color).
+
+**The restraint system — two layers, two jobs (the load-bearing rule):**
+| Layer | What | Treatment | Frequency |
+|---|---|---|---|
+| **Brand gesture** | New/Sale/Pre-order tape · WRDO❤ · kind-badges | hand-drawn sticker/tape — loud | **ONE per card max** |
+| **Functional metadata** | Local · Free Delivery · Collect · Verified | **flat pill** (IconPark icon + label + soft brand-tint) — quiet | repeats every card |
+> Test for which is which: *"does it appear on many cards?"* yes → must be a flat pill
+> (repetition + illustration = noise). Rare/special → can be a sticker. **Local & Free
+> Delivery are PILLS, never stickers** — the illustrated Local/Free-Delivery badges are
+> for hero/marketing moments where they appear ONCE, not the product grid.
+
+**Card anatomy (fixed positions — consistency across the grid is the whole point):**
+- `TapeLabel` (status only: New/Sale/Pre-order/Sold-out) — **top-left**, rotated ~-8°, MAX ONE.
+- **Vendor mark** — **top-right**, the vendor's REAL logo (not text/initials), EVERY card.
+  Trust-critical for multi-vendor. Vendor uploads logo at onboarding → field on the
+  Mercur vendor record → renders here.
+- Title: `Title/Card` (24px semibold) in **accent color** (lime/alt for product+relic+rental,
+  ember for ember-deals/pre-order — title picks up the deal's color).
 - Price: `Price` (22px bold), same accent.
 - Description: `Body` (14px, text/body-60).
-- **Notch + floating cart button** bottom-left (the concave cut-out cradling a `size-24`
-  cart-icon button). `compact=true` skips the notch.
-- Optional chip-tags row.
+- **Flat pill row** (bottom of body): Local · Free Delivery · Collect etc. — flat + soft
+  brand-tint + IconPark stroke icon. Calm but crafted (NOT default-Bootstrap-tag plain).
+
+**Buy button — NO cart on discovery cards (decided 2026-06-18):**
+- A cart button is a promise: "tap and THIS exact item starts moving to checkout." On a
+  homepage discovery feed that promise is premature (no variant chosen yet; fights the
+  "human taps to confirm" spine rule; 20 buttons = clutter).
+- `variant=preview` → **NO button. Whole card taps through to the product page** (where
+  variant is chosen + Add-to-Cart lives).
+- `variant=opener` (first card in each scroll row) → a **"See all New →" gateway button**
+  (arrow/label, NOT a cart icon) → taps to the full section listing. The notch + floating
+  button slot is reused, but the icon/label is a gateway, not a cart. Affordance matches
+  behaviour — this is WHY the two card styles differ, and users grasp it instantly.
+- Cart icon lives ONLY on listing pages (quick-add in buy-mode) + product detail (the real
+  Add to Cart). Never on the homepage grid.
 
 ### `RideTracker` (the WRDO × Paarl Taxis co-brand card)
 - `bg = void`, `radius/card` (42px), `shadow/lift`.
